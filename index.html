@@ -20,9 +20,9 @@
     --paypal-2: #0079C1;
     --iban: #E0A64B;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   body {
     background: var(--bg);
     color: var(--text);
@@ -31,13 +31,13 @@
     padding: 28px;
     -webkit-font-smoothing: antialiased;
   }
-
+ 
   .mono {
     font-family: 'IBM Plex Mono', monospace;
     font-feature-settings: "tnum";
     font-variant-numeric: tabular-nums;
   }
-
+ 
   .topbar {
     display: flex;
     justify-content: space-between;
@@ -46,46 +46,46 @@
     border-bottom: 1px solid var(--border);
     margin-bottom: 24px;
   }
-
+ 
   .topbar h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.2px; }
   .topbar .sub { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
   .clock { text-align: right; }
   .clock .time { font-size: 28px; font-weight: 500; }
   .clock .date { color: var(--text-muted); font-size: 13px; margin-top: 2px; }
-
+ 
   .totais { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-
+ 
   .cartao {
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 22px 26px;
   }
-
+ 
   .cartao .rotulo { color: var(--text-muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
   .cartao .valor-principal { font-size: 42px; font-weight: 600; color: var(--green); line-height: 1; }
   .cartao .valor-secundario { font-size: 18px; color: var(--text-muted); margin-top: 6px; }
   .cartao .meta { margin-top: 14px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 10px; }
-
+ 
   .lista-titulo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .lista-titulo h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; }
-
+ 
   .status { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
   .status .ponto { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
-
+ 
   .tabela { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-
+ 
   .linha {
     display: grid;
-    grid-template-columns: 70px 110px 1fr 1fr 110px 130px;
+    grid-template-columns: 90px 70px 110px 1fr 1fr 110px 130px;
     align-items: center;
     padding: 12px 20px;
     border-bottom: 1px solid var(--border);
     font-size: 14px;
   }
-
+ 
   .linha:last-child { border-bottom: none; }
-
+ 
   .linha.cabecalho {
     background: var(--panel-2);
     color: var(--text-muted);
@@ -94,30 +94,30 @@
     letter-spacing: 0.4px;
     padding: 10px 20px;
   }
-
+ 
   .tag { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; width: fit-content; }
   .tag.stripe { background: rgba(99,91,255,0.15); color: var(--stripe); }
   .tag.paypal { background: rgba(0,121,193,0.15); color: var(--paypal-2); }
   .tag.iban   { background: rgba(224,166,75,0.15); color: var(--iban); }
-
+ 
   .cliente { color: var(--text); }
   .produto { color: var(--text-muted); font-size: 13px; }
-
+ 
   .valor-eur { text-align: right; color: var(--green); }
   .valor-brl { text-align: right; color: var(--text-muted); font-size: 13px; }
-
+ 
   .vazio { padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 14px; }
-
+ 
   @media (max-width: 720px) {
     .totais { grid-template-columns: 1fr; }
-    .linha, .linha.cabecalho { grid-template-columns: 60px 1fr 90px; }
+    .linha, .linha.cabecalho { grid-template-columns: 70px 60px 1fr 90px; }
     .linha .produto, .linha.cabecalho .col-produto,
     .linha .valor-brl, .linha.cabecalho .col-brl { display: none; }
   }
 </style>
 </head>
 <body>
-
+ 
   <div class="topbar">
     <div>
       <h1 id="nome-empresa">PAINEL FINANCEIRO</h1>
@@ -128,7 +128,7 @@
       <div class="date" id="data-hoje">-- --- ----</div>
     </div>
   </div>
-
+ 
   <div class="totais">
     <div class="cartao">
       <div class="rotulo">Hoje</div>
@@ -143,7 +143,7 @@
       <div class="meta" id="mes-meta">—</div>
     </div>
   </div>
-
+ 
   <div class="lista-titulo">
     <h2>Últimas transações</h2>
     <div class="status">
@@ -151,9 +151,10 @@
       <span id="status-texto">carregando...</span>
     </div>
   </div>
-
+ 
   <div class="tabela">
     <div class="linha cabecalho">
+      <div>Data</div>
       <div>Hora</div>
       <div>Plataforma</div>
       <div>Cliente</div>
@@ -165,7 +166,7 @@
       <div class="vazio">Carregando dados...</div>
     </div>
   </div>
-
+ 
 <script>
   // ====== CONFIGURAÇÃO ======
   // Planilha "faturamento" do sócio, aba Pagamentos.
@@ -177,9 +178,9 @@
     NOME_EMPRESA: 'PAINEL FINANCEIRO',
     INTERVALO_ATUALIZACAO_MS: 20000
   };
-
+ 
   document.getElementById('nome-empresa').textContent = CONFIG.NOME_EMPRESA;
-
+ 
   function formatarEUR(v) {
     return '€ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
@@ -192,7 +193,7 @@
     if (chave.includes('paypal')) return { classe: 'paypal', texto: p || 'PayPal' };
     return { classe: 'iban', texto: p || 'Outro' };
   }
-
+ 
   function atualizarRelogio() {
     const agora = new Date();
     document.getElementById('relogio').textContent = agora.toLocaleTimeString('pt-BR');
@@ -200,7 +201,7 @@
   }
   atualizarRelogio();
   setInterval(atualizarRelogio, 1000);
-
+ 
   // ====== CSV PARSER (lida com campos entre aspas contendo vírgula, tipo "€ 50,00") ======
   function parseCSV(texto) {
     const linhas = [];
@@ -225,7 +226,7 @@
     if (campo.length || linha.length) { linha.push(campo); linhas.push(linha); }
     return linhas;
   }
-
+ 
   async function buscarAba(gid) {
     const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}&t=${Date.now()}`;
     const resposta = await fetch(url);
@@ -233,7 +234,7 @@
     const texto = await resposta.text();
     return parseCSV(texto);
   }
-
+ 
   function parseDataBR(str) {
     if (!str) return null;
     const partes = str.trim().split(' ');
@@ -244,14 +245,14 @@
     if (!dia || !mes || !ano) return null;
     return { dia, mes, ano, hora: horaPartes[0] || 0, min: horaPartes[1] || 0 };
   }
-
+ 
   function parseValorEuro(str) {
     if (!str) return 0;
     const limpo = String(str).replace('€', '').replace(/\s/g, '').replace(',', '.');
     const n = parseFloat(limpo);
     return isNaN(n) ? 0 : n;
   }
-
+ 
   function obterDataBrasiliaHoje() {
     const agora = new Date();
     const brasilia = new Date(agora.getTime() - 3 * 60 * 60 * 1000); // Brasília é UTC-3 fixo
@@ -261,7 +262,7 @@
       dia: brasilia.getUTCDate()
     };
   }
-
+ 
   // Cotação EUR->BRL em tempo real (API pública, sem chave, atualiza no máx a cada 5 min)
   let cotacaoCache = { valor: 6.10, ts: 0 };
   async function obterCotacaoBRL() {
@@ -274,7 +275,7 @@
     } catch (e) { /* mantém a última cotação conhecida */ }
     return cotacaoCache.valor;
   }
-
+ 
   function renderizarTabela(recentes) {
     const corpo = document.getElementById('corpo-tabela');
     if (!recentes || recentes.length === 0) {
@@ -284,6 +285,7 @@
     corpo.innerHTML = recentes.map(function (r) {
       const tag = tagPlataforma(r.plataforma);
       return '<div class="linha" title="' + (r.referencia || '') + '">' +
+        '<div class="mono">' + (r.data || '') + '</div>' +
         '<div class="mono">' + (r.hora || '') + '</div>' +
         '<div><span class="tag ' + tag.classe + '">' + tag.texto + '</span></div>' +
         '<div class="cliente">' + (r.cliente || '—') + '</div>' +
@@ -293,7 +295,7 @@
         '</div>';
     }).join('');
   }
-
+ 
   function renderizarTotais(dados) {
     document.getElementById('hoje-eur').textContent = formatarEUR(dados.hoje.eur);
     document.getElementById('hoje-brl').textContent = formatarBRL(dados.hoje.brl);
@@ -302,31 +304,31 @@
     document.getElementById('mes-brl').textContent = formatarBRL(dados.mes.brl);
     document.getElementById('mes-meta').textContent = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
   }
-
+ 
   async function atualizarDados() {
     const statusEl = document.getElementById('status-texto');
     const pontoEl = document.querySelector('.status .ponto');
-
+ 
     try {
       const linhas = await buscarAba(CONFIG.GID_PAGAMENTOS);
       // Colunas na aba Pagamentos: A Data | B Fonte | C Quem | D Item |
       // E Original | F Moeda | G Bruto € | H Taxa € | I Líquido € | J Referência
       const dadosLinhas = linhas.slice(1).filter(function (r) { return r[0]; });
-
+ 
       const hojeBR = obterDataBrasiliaHoje();
       let hojeEur = 0, hojeCount = 0, mesEur = 0;
       const recentes = [];
-
+ 
       dadosLinhas.forEach(function (r) {
         const dt = parseDataBR(r[0]);
         if (!dt) return;
-
+ 
         const fonte = r[1] || '';
         const quem = r[2] || '';
         const item = r[3] || '';
         const bruto = parseValorEuro(r[6]);
         const referencia = r[9] || '';
-
+ 
         if (dt.ano === hojeBR.ano && dt.mes === hojeBR.mes && dt.dia === hojeBR.dia) {
           hojeEur += bruto;
           hojeCount++;
@@ -334,8 +336,9 @@
         if (dt.ano === hojeBR.ano && dt.mes === hojeBR.mes) {
           mesEur += bruto;
         }
-
+ 
         recentes.push({
+          data: String(dt.dia).padStart(2, '0') + '/' + String(dt.mes).padStart(2, '0'),
           hora: String(dt.hora).padStart(2, '0') + ':' + String(dt.min).padStart(2, '0'),
           plataforma: fonte,
           cliente: quem || item,
@@ -344,29 +347,30 @@
           referencia: referencia
         });
       });
-
+ 
       const taxaBRL = await obterCotacaoBRL();
-
+ 
       renderizarTotais({
         hoje: { eur: hojeEur, brl: hojeEur * taxaBRL, count: hojeCount },
         mes: { eur: mesEur, brl: mesEur * taxaBRL }
       });
-
+ 
       renderizarTabela(recentes.slice(0, 20).map(function (r) {
         return Object.assign({}, r, { valorBrl: r.valorEur * taxaBRL });
       }));
-
+ 
       statusEl.textContent = 'sincronizado agora · cotação R$ ' + taxaBRL.toFixed(3);
       pontoEl.style.background = 'var(--green)';
-
+ 
     } catch (err) {
       statusEl.textContent = 'falha ao sincronizar — ' + err.message;
       pontoEl.style.background = '#E05252';
     }
   }
-
+ 
   atualizarDados();
   setInterval(atualizarDados, CONFIG.INTERVALO_ATUALIZACAO_MS);
 </script>
 </body>
 </html>
+ 
